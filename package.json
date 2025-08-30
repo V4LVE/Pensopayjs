@@ -11,5 +11,14 @@
     "pensopay"
   ],
   "author": "V4LVE",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/node-fetch": "^2.6.13"
+  }
 }
