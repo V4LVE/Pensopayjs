@@ -21,7 +21,7 @@ Currently there is support for the following services:
 
 - [] PaymentService
 - [x] AccountService
-- [] SettlementService 
+- [x] SettlementService 
 - [] SubscriptionServce (Including mandate support)
 
 
