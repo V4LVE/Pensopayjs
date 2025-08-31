@@ -4,7 +4,9 @@
   "description": "Pensopayjs is the unoffical npm package for the Pensopay API. It is a wrapper for the Pensopay API, and makes it easy to integrate Pensopay into your .net project.",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "ts-node src/index.ts", 
+    "test:account": "ts-node test/test-account.ts"
   },
   "keywords": [
     "payments",
