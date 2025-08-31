@@ -1,4 +1,4 @@
-import { Account } from "./account";
+import { Account } from "./Account/account";
 
 export class PensoPayClient {
   accountClient: Account;
