@@ -5,8 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts", 
-    "test:account": "ts-node test/test-account.ts"
+    "start": "ts-node src/index.ts",
+    "test:account": "ts-node test/test-account.ts",
+    "test:createPayment": "ts-node test/Payment/createPayment.ts"
   },
   "keywords": [
     "payments",
@@ -15,12 +16,12 @@
   "author": "V4LVE",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^3.3.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "@types/node-fetch": "^2.6.13"
+    "@types/node": "^24.3.3",
+    "@types/node-fetch": "^2.6.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

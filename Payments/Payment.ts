@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 
 export class Payment {
     private apiKey: string;
-    private baseUrl = 'https://api.pensopay.com/v2/payments';
+    private baseUrl = 'https://api.pensopay.com/v2';
 
     constructor(apiKey: string) {
         this.apiKey = apiKey;
