@@ -1,4 +1,4 @@
-import { CreatePaymentParams } from "./Params/PaymentParams";
+import { CreatePaymentParams, GetPaymentParams } from "./Params/PaymentParams";
 import fetch from "node-fetch";
 
 export class Payment {
@@ -38,6 +38,43 @@ export class Payment {
         return response.json();
     }
 
+    async getPayment(paymentId: number): Promise<any> {
+        const response = await fetch(`${this.baseUrl}/payments/${paymentId}`, {
+              method: "GET",
+              headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+              }
+            });
+        
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+            }
+        
+            return response.json();
+    }
+    
+    async getAllPayments(params: GetPaymentParams = {}): Promise<any> {
+        // Convert params object to query string
+        const query = new URLSearchParams(params as Record<string, string>).toString();
+        const url = `${this.baseUrl}/payments${query ? `?${query}` : ''}`;
+
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
     
 
 }

@@ -13,3 +13,14 @@ export interface CreatePaymentParams {
     testmode?: boolean;
     branding_uuid?: string;
 }
+
+export interface GetPaymentParams {
+    order_id?: string;
+    per_page?: number;  // default 15, max 250
+    page?: number;      // default 1
+    currency?: string;
+    date_from?: string; // ISO 8601 format or datetime string
+    date_to?: string;   // ISO 8601 format or datetime string
+    updated_after?: string; 
+    updated_before?: string;
+}
