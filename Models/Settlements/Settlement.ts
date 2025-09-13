@@ -1,7 +1,7 @@
 import { Period } from "./Period";
 import { Summary } from "./Summary";
-import { Fees } from "./fees";
-import { Payout } from "./payout";
+import { Fees } from "./Fees";
+import { Payout } from "./Payout";
 
 export interface Settlement {
     id: number;

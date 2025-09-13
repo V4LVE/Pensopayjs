@@ -1,5 +1,8 @@
 import fetch from "node-fetch";
 import { CreateSubscriptionParams, CreateSubscriptionPaymentParams, CreateMandateParams } from "./Params/SubscriptionParams";
+import { Subscription } from "../Models/Subscriptions/Subscription";
+import { Mandate } from "../Models/Subscriptions/Mandate";
+import { SubscriptionPayment } from "../Models/Subscriptions/SubscriptionPayment";
 
 export class SubscriptionClient {
     private apiKey: string;
@@ -10,7 +13,7 @@ export class SubscriptionClient {
     }
 
     //#region Get Requests
-    async getAllSubscriptions(per_page: number, page: number): Promise<any> {
+    async getAllSubscriptions(per_page: number, page: number): Promise<Subscription[]> {
         const response = await fetch(`${this.baseUrl}/subscriptions?per_page=${per_page}&page=${page}`, {
             method: "GET",
             headers: {
@@ -22,10 +25,11 @@ export class SubscriptionClient {
             throw new Error(`Error fetching subscriptions: ${response.statusText}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Subscription[];
     }
 
-    async getSubscription(subscriptionId: string): Promise<any> {
+    async getSubscription(subscriptionId: string): Promise<Subscription> {
         const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}`, {
             method: "GET",
             headers: {
@@ -37,10 +41,11 @@ export class SubscriptionClient {
             throw new Error(`Error fetching subscription: ${response.statusText}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Subscription;
     }
 
-    async getAllMandates(subscriptionId: string, per_page: number, page: number): Promise<any> {
+    async getAllMandates(subscriptionId: string, per_page: number, page: number): Promise<Mandate[]> {
         const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/mandates?per_page=${per_page}&page=${page}`, {
             method: "GET",
             headers: {
@@ -52,10 +57,11 @@ export class SubscriptionClient {
             throw new Error(`Error fetching mandates: ${response.statusText}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Mandate[];
     }
 
-    async getMandate(subscriptionId: number, mandateId: number): Promise<any> {
+    async getMandate(subscriptionId: number, mandateId: number): Promise<Mandate> {
         const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/mandates/${mandateId}`, {
             method: "GET",
             headers: {
@@ -67,7 +73,8 @@ export class SubscriptionClient {
             throw new Error(`Error fetching mandate: ${response.statusText}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Mandate;
     }
     
 
@@ -75,7 +82,7 @@ export class SubscriptionClient {
 
     //#region Create Requests
     
-    async createSubscription(params: CreateSubscriptionParams): Promise<any> {
+    async createSubscription(params: CreateSubscriptionParams): Promise<Subscription> {
 
         // Validate required parameters
         const requiredParams = ["reference", "amount", "currency", "description"];
@@ -99,10 +106,11 @@ export class SubscriptionClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Subscription;
     }
 
-    async createSubscriptionPayment(subscriptionId: number, params: CreateSubscriptionPaymentParams): Promise<any> {
+    async createSubscriptionPayment(subscriptionId: number, params: CreateSubscriptionPaymentParams): Promise<SubscriptionPayment> {
 
         // Validate required parameters
         const requiredParams = ["order_id"];
@@ -126,10 +134,11 @@ export class SubscriptionClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as SubscriptionPayment;
     }
 
-    async createMandate(subscriptionId: number, params: CreateMandateParams): Promise<any> {
+    async createMandate(subscriptionId: number, params: CreateMandateParams): Promise<Mandate> {
 
         // Validate required parameters
         const requiredParams = ["reference"];
@@ -153,14 +162,15 @@ export class SubscriptionClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Mandate;
     }
 
     //#endregion
 
     //#region Post Actions
 
-    async cancelSubscription(subscriptionId: number): Promise<any> {
+    async cancelSubscription(subscriptionId: number): Promise<Subscription> {
         const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/cancel`, {
             method: "POST",
             headers: {
@@ -174,10 +184,11 @@ export class SubscriptionClient {
             throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json()
+        return data as Subscription;
     }
 
-    async revokeMandate(subscriptionId: number, mandateId: number): Promise<any> {
+    async revokeMandate(subscriptionId: number, mandateId: number): Promise<Mandate> {
         const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/mandates/${mandateId}/revoke`, {
             method: "POST",
             headers: {
@@ -191,7 +202,8 @@ export class SubscriptionClient {
             throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Mandate;
     }
 
     //#endregion
