@@ -76,5 +76,66 @@ export class Payment {
         return response.json();
     }
     
+    async cancelPayment(paymentId: number): Promise<any> {
+        const response = await fetch(`${this.baseUrl}/payments/${paymentId}/cancel`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        });
 
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
+    async refundPayment(paymentId: number, amount?: number): Promise<any> {
+        const fetchOptions: any = {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        };
+
+        if (amount) {
+            fetchOptions.body = JSON.stringify({ amount });
+        }
+
+        const response = await fetch(`${this.baseUrl}/payments/${paymentId}/refund`, fetchOptions);
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
+    async capturePayment(paymentId: number, amount?: number): Promise<any> {
+        const fetchOptions: any = {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        };
+
+        if (amount) {
+            fetchOptions.body = JSON.stringify({ amount });
+        }
+
+        const response = await fetch(`${this.baseUrl}/payments/${paymentId}/capture`, fetchOptions);
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
 }
