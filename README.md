@@ -22,7 +22,7 @@ Currently there is support for the following services:
 - [x] PaymentClient
 - [x] AccountClient
 - [x] SettlementClient 
-- [] SubscriptionClient (Including mandate support)
+- [x] SubscriptionClient (Including mandate support)
 
 
 Each service has a set of methods, which corresponds to the endpoints in the Pensopay API. The methods are async, and returns a response as JSON data, which contains the response from the Pensopay API.
