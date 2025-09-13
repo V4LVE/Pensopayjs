@@ -1,7 +1,7 @@
 # Pensopay Payments JS
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Package](https://img.shields.io/badge/Package-Nuget-red)](https://www.nuget.org/packages/Pensopay/)
+[![Package](https://img.shields.io/badge/Package-npm-red)](https://www.npmjs.com/package/pensopayjs)
 
 Pensopay Payments is the unoffical npm package for the [Pensopay API](https://docs.pensopay.com/v2.0/reference/getting-started). It is a wrapper for the Pensopay API, and makes it easy to integrate Pensopay into your Node and Express project.
 
@@ -19,7 +19,7 @@ You also need a payment agreement, which you can create right [here](https://das
 The communication with Pensopay is done through the servies classes. They each represent a part of the Pensopay API.
 Currently there is support for the following services:
 
-- [] PaymentClient
+- [x] PaymentClient
 - [x] AccountClient
 - [x] SettlementClient 
 - [] SubscriptionClient (Including mandate support)
