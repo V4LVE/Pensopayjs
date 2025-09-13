@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { CreateSubscriptionParams, CreateSubscriptionPaymentParams, CreateMandateParams } from "./Params/SubscriptionParams";
 
-export class Subscription {
+export class SubscriptionClient {
     private apiKey: string;
     private baseUrl = "https://api.pensopay.com/v2";
 

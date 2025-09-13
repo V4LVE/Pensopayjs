@@ -1,7 +1,7 @@
 import { CreatePaymentParams, GetPaymentParams } from "./Params/PaymentParams";
 import fetch from "node-fetch";
 
-export class Payment {
+export class PaymentClient {
     private apiKey: string;
     private baseUrl = 'https://api.pensopay.com/v2';
 
