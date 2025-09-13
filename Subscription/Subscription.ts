@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { CreateSubscriptionParams, CreateSubscriptionPaymentParams, CreateMandateParams } from "./Params/SubscriptionParams";
 
 export class Subscription {
     private apiKey: string;
@@ -73,6 +74,87 @@ export class Subscription {
     //#endregion
 
     //#region Create Requests
+    
+    async createSubscription(params: CreateSubscriptionParams): Promise<any> {
+
+        // Validate required parameters
+        const requiredParams = ["reference", "amount", "currency", "description"];
+        for (const param of requiredParams) {
+            if (!params[param as keyof CreateSubscriptionParams]) {
+                throw new Error(`Missing required parameter: ${param}`);
+            }
+        }
+
+        const response = await fetch(`${this.baseUrl}/subscriptions`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
+    async createSubscriptionPayment(subscriptionId: number, params: CreateSubscriptionPaymentParams): Promise<any> {
+
+        // Validate required parameters
+        const requiredParams = ["order_id"];
+        for (const param of requiredParams) {
+            if (!params[param as keyof CreateSubscriptionPaymentParams]) {
+                throw new Error(`Missing required parameter: ${param}`);
+            }
+        }
+
+        const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/payments`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
+    async createMandate(subscriptionId: number, params: CreateMandateParams): Promise<any> {
+
+        // Validate required parameters
+        const requiredParams = ["reference"];
+        for (const param of requiredParams) {
+            if (!params[param as keyof CreateMandateParams]) {
+                throw new Error(`Missing required parameter: ${param}`);
+            }
+        }
+
+        const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/mandates`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
 
     //#endregion
 
