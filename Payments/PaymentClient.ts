@@ -1,4 +1,5 @@
 import { CreatePaymentParams, GetPaymentParams } from "./Params/PaymentParams";
+import { Payment } from "../Models/Payments/Payment";
 import fetch from "node-fetch";
 
 export class PaymentClient {
@@ -38,7 +39,7 @@ export class PaymentClient {
         return response.json();
     }
 
-    async getPayment(paymentId: number): Promise<any> {
+    async getPayment(paymentId: number): Promise<Payment> {
         const response = await fetch(`${this.baseUrl}/payments/${paymentId}`, {
               method: "GET",
               headers: {
@@ -52,10 +53,11 @@ export class PaymentClient {
               throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
             }
         
-            return response.json();
+            const data = await response.json();
+            return data as Payment;
     }
     
-    async getAllPayments(params: GetPaymentParams = {}): Promise<any> {
+    async getAllPayments(params: GetPaymentParams = {}): Promise<Payment[]> {
         // Convert params object to query string
         const query = new URLSearchParams(params as Record<string, string>).toString();
         const url = `${this.baseUrl}/payments${query ? `?${query}` : ''}`;
@@ -73,7 +75,8 @@ export class PaymentClient {
             throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment[];
     }
     
     async cancelPayment(paymentId: number): Promise<any> {
