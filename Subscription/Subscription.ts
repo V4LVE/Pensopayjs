@@ -160,5 +160,39 @@ export class Subscription {
 
     //#region Post Actions
 
+    async cancelSubscription(subscriptionId: number): Promise<any> {
+        const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/cancel`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
+    async revokeMandate(subscriptionId: number, mandateId: number): Promise<any> {
+        const response = await fetch(`${this.baseUrl}/subscriptions/${subscriptionId}/mandates/${mandateId}/revoke`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${this.apiKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
+        }
+
+        return response.json();
+    }
+
     //#endregion
 }
