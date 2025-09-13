@@ -10,7 +10,7 @@ export class PaymentClient {
         this.apiKey = apiKey;
     }
 
-    async createPayment(params: CreatePaymentParams): Promise<any> {
+    async createPayment(params: CreatePaymentParams): Promise<Payment> {
 
         // Validate required parameters
         if (!params.amount || !params.currency || !params.order_id) {
@@ -36,7 +36,8 @@ export class PaymentClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
     async getPayment(paymentId: number): Promise<Payment> {
@@ -79,7 +80,7 @@ export class PaymentClient {
         return data as Payment[];
     }
     
-    async cancelPayment(paymentId: number): Promise<any> {
+    async cancelPayment(paymentId: number): Promise<Payment> {
         const response = await fetch(`${this.baseUrl}/payments/${paymentId}/cancel`, {
             method: "POST",
             headers: {
@@ -93,10 +94,11 @@ export class PaymentClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
-    async refundPayment(paymentId: number, amount?: number): Promise<any> {
+    async refundPayment(paymentId: number, amount?: number): Promise<Payment> {
         const fetchOptions: any = {
             method: "POST",
             headers: {
@@ -116,10 +118,11 @@ export class PaymentClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
-    async capturePayment(paymentId: number, amount?: number): Promise<any> {
+    async capturePayment(paymentId: number, amount?: number): Promise<Payment> {
         const fetchOptions: any = {
             method: "POST",
             headers: {
@@ -139,6 +142,7 @@ export class PaymentClient {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 }

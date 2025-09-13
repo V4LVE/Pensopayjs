@@ -1,5 +1,6 @@
 import { UUID } from "crypto";
 import fetch from "node-fetch";
+import { Settlement } from "../Models/Settlements/Settlement";
 
 export class SettlementClient {
   private apiKey: string;
@@ -9,7 +10,7 @@ export class SettlementClient {
     this.apiKey = apiKey;
   }
 
-  async getAllSettlements(): Promise<any> {
+  async getAllSettlements(): Promise<Settlement[]> {
     const response = await fetch(`${this.baseUrl}/settlements`, {
       method: "GET",
       headers: {
@@ -23,7 +24,8 @@ export class SettlementClient {
       throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data as Settlement[];
   }
 
   async getSettlementTransactions(settlementId: string): Promise<any> {
@@ -43,7 +45,7 @@ export class SettlementClient {
     return response.json();
   }
 
-  async getSettlement(settlementId: string): Promise<any> {
+  async getSettlement(settlementId: string): Promise<Settlement> {
     const response = await fetch(`${this.baseUrl}/settlements/${settlementId}`, {
       method: "GET",
       headers: {
@@ -57,6 +59,7 @@ export class SettlementClient {
       throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data as Settlement;
   }
 }
