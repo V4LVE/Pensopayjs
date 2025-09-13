@@ -19,10 +19,10 @@ You also need a payment agreement, which you can create right [here](https://das
 The communication with Pensopay is done through the servies classes. They each represent a part of the Pensopay API.
 Currently there is support for the following services:
 
-- [] PaymentService
-- [x] AccountService
-- [x] SettlementService 
-- [] SubscriptionServce (Including mandate support)
+- [] PaymentClient
+- [x] AccountClient
+- [x] SettlementClient 
+- [] SubscriptionClient (Including mandate support)
 
 
 Each service has a set of methods, which corresponds to the endpoints in the Pensopay API. The methods are async, and returns a response as JSON data, which contains the response from the Pensopay API.
