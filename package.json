@@ -1,6 +1,6 @@
 {
   "name": "pensopayjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pensopayjs is the unoffical npm package for the Pensopay API. It is a wrapper for the Pensopay API, and makes it easy to integrate Pensopay into your .net project.",
   "main": "index.ts",
   "scripts": {

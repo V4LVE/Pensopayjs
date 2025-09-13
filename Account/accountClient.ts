@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
+import { Account } from "../Models/Account";
 
-export class Account {
+export class AccountClient {
   private apiKey: string;
   private baseUrl = "https://api.pensopay.com/v2";
 
@@ -8,7 +9,7 @@ export class Account {
     this.apiKey = apiKey;
   }
 
-  async getAccount(): Promise<any> {
+  async getAccount(): Promise<Account> {
     const response = await fetch(`${this.baseUrl}/account`, {
       method: "GET",
       headers: {
@@ -22,7 +23,8 @@ export class Account {
       throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data as Account;
   }
 
   async getAccountMethods(): Promise<any> {

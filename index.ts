@@ -1,15 +1,18 @@
-import { Account } from "./Account/account";
-import { Settlement } from "./Settlement/settlement";
-import { Payment } from "./Payments/Payment";
+import { AccountClient } from "./Account/accountClient";
+import { SettlementClient } from "./Settlement/settlementClient";
+import { PaymentClient } from "./Payments/PaymentClient";
+import { SubscriptionClient } from "./Subscription/SubscriptionClient";
 
 export class PensoPayClient {
-  accountClient: Account;
-  settlementClient: Settlement;
-  paymentClient: Payment;
+  accountClient: AccountClient;
+  settlementClient: SettlementClient;
+  paymentClient: PaymentClient;
+  subscriptionClient: SubscriptionClient;
 
   constructor(apiKey: string) {
-    this.accountClient = new Account(apiKey);
-    this.settlementClient = new Settlement(apiKey);
-    this.paymentClient = new Payment(apiKey);
+    this.accountClient = new AccountClient(apiKey);
+    this.settlementClient = new SettlementClient(apiKey);
+    this.paymentClient = new PaymentClient(apiKey);
+    this.subscriptionClient = new SubscriptionClient(apiKey);
   }
 }

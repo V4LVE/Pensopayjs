@@ -1,7 +1,8 @@
 import { CreatePaymentParams, GetPaymentParams } from "./Params/PaymentParams";
+import { Payment } from "../Models/Payments/Payment";
 import fetch from "node-fetch";
 
-export class Payment {
+export class PaymentClient {
     private apiKey: string;
     private baseUrl = 'https://api.pensopay.com/v2';
 
@@ -9,7 +10,7 @@ export class Payment {
         this.apiKey = apiKey;
     }
 
-    async createPayment(params: CreatePaymentParams): Promise<any> {
+    async createPayment(params: CreatePaymentParams): Promise<Payment> {
 
         // Validate required parameters
         if (!params.amount || !params.currency || !params.order_id) {
@@ -35,10 +36,11 @@ export class Payment {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
-    async getPayment(paymentId: number): Promise<any> {
+    async getPayment(paymentId: number): Promise<Payment> {
         const response = await fetch(`${this.baseUrl}/payments/${paymentId}`, {
               method: "GET",
               headers: {
@@ -52,10 +54,11 @@ export class Payment {
               throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
             }
         
-            return response.json();
+            const data = await response.json();
+            return data as Payment;
     }
     
-    async getAllPayments(params: GetPaymentParams = {}): Promise<any> {
+    async getAllPayments(params: GetPaymentParams = {}): Promise<Payment[]> {
         // Convert params object to query string
         const query = new URLSearchParams(params as Record<string, string>).toString();
         const url = `${this.baseUrl}/payments${query ? `?${query}` : ''}`;
@@ -73,10 +76,11 @@ export class Payment {
             throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment[];
     }
     
-    async cancelPayment(paymentId: number): Promise<any> {
+    async cancelPayment(paymentId: number): Promise<Payment> {
         const response = await fetch(`${this.baseUrl}/payments/${paymentId}/cancel`, {
             method: "POST",
             headers: {
@@ -90,10 +94,11 @@ export class Payment {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
-    async refundPayment(paymentId: number, amount?: number): Promise<any> {
+    async refundPayment(paymentId: number, amount?: number): Promise<Payment> {
         const fetchOptions: any = {
             method: "POST",
             headers: {
@@ -113,10 +118,11 @@ export class Payment {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 
-    async capturePayment(paymentId: number, amount?: number): Promise<any> {
+    async capturePayment(paymentId: number, amount?: number): Promise<Payment> {
         const fetchOptions: any = {
             method: "POST",
             headers: {
@@ -136,6 +142,7 @@ export class Payment {
         throw new Error(`PensoPay API error: ${response.status} ${JSON.stringify(errorData)}`);
         }
 
-        return response.json();
+        const data = await response.json();
+        return data as Payment;
     }
 }
